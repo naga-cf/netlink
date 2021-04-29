@@ -6,6 +6,9 @@ use std::{
 
 use crate::SocketAddr;
 
+const NETLINK_LISTEN_ALL_NSID: i32 = 8;
+const NETLINK_CAP_ACK: i32 = 10;
+
 /// A netlink socket.
 ///
 /// # Example
@@ -394,14 +397,14 @@ impl Socket {
         setsockopt(
             self.0,
             libc::SOL_NETLINK,
-            libc::NETLINK_LISTEN_ALL_NSID,
+            NETLINK_LISTEN_ALL_NSID,
             value,
         )
     }
 
     pub fn get_listen_all_namespaces(&self) -> Result<bool> {
         let res =
-            getsockopt::<libc::c_int>(self.0, libc::SOL_NETLINK, libc::NETLINK_LISTEN_ALL_NSID)?;
+            getsockopt::<libc::c_int>(self.0, libc::SOL_NETLINK, NETLINK_LISTEN_ALL_NSID)?;
         Ok(res == 1)
     }
 
@@ -411,11 +414,11 @@ impl Socket {
     /// guess from the sequence  number which message triggered the acknowledgment.
     pub fn set_cap_ack(&mut self, value: bool) -> Result<()> {
         let value: libc::c_int = if value { 1 } else { 0 };
-        setsockopt(self.0, libc::SOL_NETLINK, libc::NETLINK_CAP_ACK, value)
+        setsockopt(self.0, libc::SOL_NETLINK, NETLINK_CAP_ACK, value)
     }
 
     pub fn get_cap_ack(&self) -> Result<bool> {
-        let res = getsockopt::<libc::c_int>(self.0, libc::SOL_NETLINK, libc::NETLINK_CAP_ACK)?;
+        let res = getsockopt::<libc::c_int>(self.0, libc::SOL_NETLINK, NETLINK_CAP_ACK)?;
         Ok(res == 1)
     }
 }

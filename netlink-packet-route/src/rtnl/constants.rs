@@ -613,9 +613,9 @@ pub const IFF_UP: u32 = libc::IFF_UP as u32;
 /// Link is up and carrier is OK (RFC2863 OPER_UP)
 pub const IFF_RUNNING: u32 = libc::IFF_RUNNING as u32;
 /// Link layer is operational
-pub const IFF_LOWER_UP: u32 = libc::IFF_LOWER_UP as u32;
+pub const IFF_LOWER_UP: u32 = 0x10000 as u32;
 /// Driver signals IFF_DORMANT
-pub const IFF_DORMANT: u32 = libc::IFF_DORMANT as u32;
+pub const IFF_DORMANT: u32 = 0x20000 as u32;
 /// Link supports broadcasting
 pub const IFF_BROADCAST: u32 = libc::IFF_BROADCAST as u32;
 /// Link supports multicasting
